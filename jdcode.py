@@ -5,10 +5,14 @@ from flask import Flask, request, render_template
 import json
 import subprocess
 from update import Update
+import configparser
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 CORS(app, supports_credentials=True)
+conf = configparser.ConfigParser()
+conf.read("./config.ini", encoding='UTF-8')
+
 
 @app.route('/getCode', methods=['POST'])
 def get_code():
@@ -51,7 +55,7 @@ def input_code():
 
 def send_dding(phone,text):
     #钉钉的机器人token，校验关键字为ck
-    token = ""
+    token = conf["dding"].get("token")
     url = "https://oapi.dingtalk.com/robot/send?access_token=" + token
     payload = json.dumps({
         "text": {

@@ -5,14 +5,17 @@ import requests
 import json
 import re
 import time
+import configparser
 
 class Update():
 
     def __init__(self,ck=None,phone=None):
         #青龙面板地址、账号密码
-        self.host = "http://192.168.31.104:5800/"
-        self.name = ""
-        self.password = ""
+        conf = configparser.ConfigParser()
+        conf.read("./config.ini", encoding='UTF-8')
+        self.host = conf["ql"].get('host')
+        self.name = conf["ql"].get('name')
+        self.password = conf["ql"].get('password')
         self.ck = ck
         self.token = self.get_token()
         self.phone = phone
@@ -123,8 +126,8 @@ class Update():
 if __name__ == '__main__':
 
     ck = 'pt_key=33JiC5lOADBAJIqAX8UDhNHkh_qypfyAyQkqWu5ADdZgHkudbNtdlSkBEOIMxO73oT_npf__Hvc;pt_pin=jd_67r828540e7yd;'
-    phone = '13486329823'
-    id = "y27oepazezEkR85x"
+    phone = ''
+    id = ""
     Update(ck,phone).match_ck()
 
 
