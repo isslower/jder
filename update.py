@@ -117,7 +117,7 @@ class Update():
 
 if __name__ == '__main__':
 
-    ck = 'pt_key=33JiC5lOADBAJIqAX8UDhNHkh_qypfyAyQkqWu5ADdZgHkudbNtdlSkBEOIMxO73oT_npf__Hvc;pt_pin=jd_67r828540e7yd;'
+    ck = 'pt_key=33JiC511lOADBAJIqAX8UDhNHkh_qypfyAyQkqWu5ADdZgHkudbNtdlSkBEOIMxO73oT_npf__Hvc;pt_pin=jd_67r828540e7yd;'
     phone = ''
     id = ""
     Update().get_all_ck()
