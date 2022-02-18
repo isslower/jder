@@ -1,7 +1,7 @@
 
 
 ###个人学习demo，请勿传播使用，24小时内请删除！！！
-<br>
+
 
 #####根据此基础进行二开
 >sh <(curl -s https://gitee.com/shoujiyanxishe/shjb/raw/main/jd/ptkey.sh)
