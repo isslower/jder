@@ -14,24 +14,16 @@ class Update():
         conf = configparser.ConfigParser()
         conf.read("./config.ini", encoding='UTF-8')
         self.host = conf["ql"].get('host')
-        self.name = conf["ql"].get('name')
-        self.password = conf["ql"].get('password')
+        self.client_id = conf["ql"].get('client_id')
+        self.client_secret = conf["ql"].get('client_secret')
         self.ck = ck
         self.token = self.get_token()
         self.phone = phone
 
 
     def get_token(self):
-        t = int(round(time.time() * 1000))
-        url = self.host + "api/user/login?t="+str(t)
-        payload = json.dumps({
-            "username": self.name,
-            "password": self.password
-        })
-        headers = {
-            'Content-Type': 'application/json'
-        }
-        response = requests.request("POST", url, headers=headers, data=payload).json()
+        url = self.host + "open/auth/token?client_id={}&client_secret={}".format(self.client_id,self.client_secret)
+        response = requests.request("GET", url).json()
         print("获取token:",response)
         return response["data"]["token"]
 
@@ -56,19 +48,19 @@ class Update():
     # 获取所有的变量
     def get_all_ck(self):
         t = int(round(time.time() * 1000))
-        url = self.host + "api/envs?searchValue=&t="+str(t)
+        url = self.host + "open/envs?searchValue=&t="+str(t)
         payload = ""
         headers = {
             'Authorization': 'Bearer '+self.token
         }
         response = requests.request("GET", url, headers=headers, data=payload).json()
-        # print(response["data"])
+        print(response)
         return response["data"]
 
     # 更新变量
     def update_ck(self,remark=None,id=None):
         t = int(round(time.time() * 1000))
-        url = self.host+"api/envs?t="+str(t)
+        url = self.host+"open/envs?t="+str(t)
         payload = json.dumps({
             "name": "JD_COOKIE",
             "value": self.ck,
@@ -86,7 +78,7 @@ class Update():
 
     def add_ck(self):
         t = int(round(time.time() * 1000))
-        url = self.host+"api/envs?t="+str(t)
+        url = self.host+"open/envs?t="+str(t)
         payload = json.dumps([
             {
                 "value": self.ck,
@@ -104,7 +96,7 @@ class Update():
 
     def start_ck(self,id):
         t = int(round(time.time() * 1000))
-        url = self.host+"api/envs/enable?t="+str(t)
+        url = self.host+"open/envs/enable?t="+str(t)
         print(id)
         list=[]
         list.append(id)
@@ -128,6 +120,6 @@ if __name__ == '__main__':
     ck = 'pt_key=33JiC5lOADBAJIqAX8UDhNHkh_qypfyAyQkqWu5ADdZgHkudbNtdlSkBEOIMxO73oT_npf__Hvc;pt_pin=jd_67r828540e7yd;'
     phone = ''
     id = ""
-    Update(ck,phone).match_ck()
+    Update().get_all_ck()
 
 
