@@ -44,8 +44,13 @@ cp jder/html/login.html /var/www/html
 
 #启动后台
 ```shell
+
 cd /root/jder
+#安装环境
+pip3 install -r requirements.txt
+
 chmod 777 getcode.sh inputcode.sh
+
 nohup python3 jdcode.py  1>"$(pwd)"/log 2>&1 &
 ```
 
